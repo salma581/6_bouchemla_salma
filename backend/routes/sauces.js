@@ -1,15 +1,10 @@
 // routes/sauces.js
-
-
 // On déclare notre framework Express
 const express = require('express');
 const router = express.Router();
 const multer = require('../middleware/multer-config');
 const auth = require('../middleware/auth');
-
 const sauceCtrl = require('../controllers/sauces');
-
-
 
 // La logique routes
 router.post('/', auth, multer, sauceCtrl.createSauce);// Envoi des données

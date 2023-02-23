@@ -1,3 +1,5 @@
+const multer = require('multer');
+
 // Modification de l'extension des fichiers
 const MIME_TYPES = {
     'image/jpg': 'jpg',
