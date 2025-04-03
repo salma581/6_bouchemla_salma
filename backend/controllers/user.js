@@ -5,7 +5,6 @@ const { validationResult } = require('express-validator');
 require('dotenv').config()
 const User = require('../models/User');
 
-
 // Enregistrement de nouveaux utilisateurs
 exports.signup = (req, res, next) => {
   let email = sanitize(req.body.email);
@@ -33,8 +32,6 @@ exports.signup = (req, res, next) => {
   }
 
 };
-
-
 // pour connecter un utilisateur deja existant
 exports.login = (req, res, next) => {
   let email = sanitize(req.body.email);
@@ -69,30 +66,3 @@ exports.login = (req, res, next) => {
     .catch(error => res.status(500).json({ error: error.message }));
 };
 
-// exports.login = (req, res, next) => {
-//   let email = sanitize(req.body.email);
-//   let password = sanitize(req.body.password);
-//   User.findOne({ email: email })
-//     .then(user => {
-//       if (!user) {
-//         return res.status(401).json({ error: 'Utilisateur(rice) non trouvé(e)' });
-//       }
-//       bcrypt.compare(password, user.password)
-//         .then(valid => {
-//           if (!valid) {
-//             return res.status(401).json({ error });
-//           }
-//           res.status(200).json({
-//             userId: user._id,
-//             token: jwt.sign(
-//               { userId: user._id },
-//               `${process.env.SECRET_KEY}`,
-//               { expiresIn: '24h' }
-//             )
-//           });
-//           return ({ message: 'Utilisateur(rice) connecté(e) !' })
-//         })
-//         .catch(error => res.status(500).json({ error: 'Impossible de connecter l\'utilisateur(rice)' }));
-//     })
-//     .catch(error => res.status(500).json({ error: 'Impossible de connecter l\'utilisateur(rice)' }));
-// };
