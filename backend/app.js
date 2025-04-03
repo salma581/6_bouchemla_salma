@@ -6,21 +6,18 @@ const path = require('path');
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauces');
 require('dotenv').config();
-mongoose.set('strictQuery', true) //false or true
 
-mongoose.connect(process.env.DB_URL,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
-// mongoose.connect('mongodb+srv://salma:sell000000@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority',
-//   { useNewUrlParser: true,
-//     useUnifiedTopology: true })
-//   .then(() => console.log('Connexion à MongoDB réussie !'))
-//   .catch(() => console.log('Connexion à MongoDB échouée !'));
+// Configuration MongoDB
+mongoose.set('strictQuery', true);
 
+mongoose.connect(process.env.DB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('Connexion à MongoDB réussie !'))
+.catch((error) => console.log('Connexion à MongoDB échouée :', error.message));
+
+// Middleware CORS
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -28,11 +25,15 @@ app.use((req, res, next) => {
   next();
 });
 
-console.log('Clé secrète :', process.env.SECRET_KEY);
-
+// Middlewares
 app.use(bodyParser.json());
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', sauceRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// Pour le développement seulement - à supprimer en production
+if (process.env.NODE_ENV !== 'production') {
+  console.log('Mode développement actif');
+}
 
 module.exports = app;
