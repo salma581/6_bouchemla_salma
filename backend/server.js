@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 require('dotenv').config();
 console.log('Clé secrète :', process.env.SECRET_KEY);
-=======
->>>>>>> b9f4b84f5d3410f8824311b05a3f32bb6593a377
+
 const http = require('http');
 const app = require('./app');
 
@@ -17,7 +15,8 @@ const normalizePort = val => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || '3000');
+
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 const errorHandler = error => {
