@@ -35,5 +35,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 if (process.env.NODE_ENV !== 'production') {
   console.log('Mode développement actif');
 }
-
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'API Sauce Piquante opérationnelle' });
+});
 module.exports = app;
